@@ -2,7 +2,7 @@
 
 Object detection using [aws rekognition](https://aws.amazon.com/rekognition/) and [aws lambda](https://aws.amazon.com/lambda/)
 
-Tu use aws services, a credentials must exist in `~/.aws/credentials` with an `aws_access_key_id` and `aws_secret_access_key`
+To use aws services, a credentials must exist in `~/.aws/credentials` with an `aws_access_key_id` and `aws_secret_access_key`
 
 
 To setup run `./setup-server.sh`
@@ -10,6 +10,8 @@ To setup run `./setup-server.sh`
 To rest run `./test.sh`
 
 To detect objects from a url:
+
+To package for lambda run `make build-lambda-package`
 
 ```
 from detect import detect_images_from_urls
