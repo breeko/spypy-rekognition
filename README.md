@@ -9,9 +9,9 @@ To setup run `./setup-server.sh`
 
 To rest run `./test.sh`
 
-To detect objects from a url:
-
 To package for lambda run `make build-lambda-package`
+
+To detect objects from a url:
 
 ```
 from detect import detect_images_from_urls
