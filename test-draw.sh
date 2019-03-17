@@ -3,18 +3,25 @@ cd src
 
 python -c \
 """
-from config import s3_client, s3_bucket, rekognition_client
-from utils import download_to_s3
+from static import s3_client, rekognition_client
+from s3_utils import upload_files_to_s3
 from PIL import Image
-from convert import draw_boxes
+from convert import draw_boxes, get_bounding_boxes
 
-url='https://ferguspigeonman.files.wordpress.com/2012/04/img_6828.jpg'
+image_path='../images/warehouse/2019-03-14-20-0-0-0.png'
+image_name = upload_files_to_s3(s3_client, 'spypy-test', image_path)[0]
+image = Image.open(image_path)
+print(image_name)
+image_s3 = {'S3Object': {'Bucket': 'spypy-test','Name': image_name}}
+response = rekognition_client.detect_labels(Image=image_s3, MaxLabels=10)
 
-image_name = download_to_s3(s3_client, s3_bucket, url, keep=True)
-image_s3 = {'S3Object': {'Bucket': s3_bucket,'Name': image_name}}
-im = Image.open(image_name)
-replies = rekognition_client.detect_labels(Image=image_s3, MaxLabels=10)
-im = draw_boxes(im, replies)
-im.show()
+bounding_boxes = get_bounding_boxes(
+    replies=response,
+    image_height=image.height,
+    image_width=image.width,
+    min_confidence=0.5
+)
+image = draw_boxes(image, bounding_boxes)
+image.show()
 """
 

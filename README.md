@@ -4,23 +4,27 @@ Object detection using [aws rekognition](https://aws.amazon.com/rekognition/) an
 
 To use aws services, a credentials must exist in `~/.aws/credentials` with an `aws_access_key_id` and `aws_secret_access_key`
 
+There exist two buckets, one for unprocessed and the other for processed images (defined in config.py). The lambda function in handler.process_image is triggered when a file is put into the unprocessed bucket.
+
+NOTE: File names in s3 are like keys: they should be unique. None of the applications override s3 files and response objects are cached based on file name
 
 To setup run `./setup-server.sh`
 
 To rest run `./test.sh`
+
+To rest draw `./test-draw.sh`
 
 To package for lambda run `make build-lambda-package`
 
 To detect objects from a url:
 
 ```
-from detect import detect_images_from_urls
+from detect import detect_from_images
 
 url='https://cdn1.autoexpress.co.uk/sites/autoexpressuk/files/2/22/dsc112-733_0.jpg' 
-out = detect_images_from_urls(url)
+out = detect_from_images(url)
 
 print(out)
-
 
 {
     "Labels": [

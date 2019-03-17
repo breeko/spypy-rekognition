@@ -1,6 +1,7 @@
 setup.cfg
 .vscode
 .DS_Store
+images
 
 venv
 env
